@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/32020004/README.md)
+[README.md](https://github.com/user-attachments/files/32030898/README.md)
 # Sales Performance Analysis
 
 An end-to-end sales analytics project: raw data → SQL cleaning → SQL analysis → interactive Power BI dashboard.
@@ -12,19 +12,16 @@ An end-to-end sales analytics project: raw data → SQL cleaning → SQL analysi
 ```text
 /data
   /raw          → customers.csv, orders.csv, products.csv (as originally sourced)
-  /clean        → customers_clean.csv, orders_clean.csv, products_clean.csv (post-SQL cleaning)
+  /clean        → customers.csv, orders.csv, products.csv (post-SQL cleaning)
 /sql
   01_create_database.sql
   02_import_data.sql
   03_data_cleaning.sql
   04_sql_analysis_queries.sql
-/screenshots
-  /sql_results              → phpMyAdmin proof of each analysis query running
-  /dax_measures             → every DAX measure/column, as written in Power BI
-  /page1_overview           → build process, Page 1
-  /page2_products           → build process, Page 2
-  /page3_customers          → build process, Page 3
-  /page4_discount_shipping  → build process, Page 4
+  /Analysis Photos   → phpMyAdmin proof of each analysis query running
+/powerbi
+  /DAX Measures     → every DAX measure/column, as written in Power BI
+  /Visual Process   → build process screenshots, Pages 1-4, plus the .pbix file
 README.md
 ```
 
@@ -54,7 +51,7 @@ Full process documented in **[`sql/03_data_cleaning.sql`](sql/03_data_cleaning.s
 
 A manual review was also done on top of the SQL checks, given the dataset's small size, to confirm no remaining nulls, blanks, duplicates, or spelling inconsistencies.
 
-Cleaned data is all in the resective folder (the individual files are written the same as the raw)
+Cleaned data is all in the [`data/clean`](data/clean) folder (the individual files are named the same as the raw versions in [`data/raw`](data/raw)).
 
 ---
 
@@ -62,14 +59,14 @@ Cleaned data is all in the resective folder (the individual files are written th
 
 Six core queries in **[`sql/04_sql_analysis_queries.sql`](sql/04_sql_analysis_queries.sql)**, each verified directly in phpMyAdmin/MySQL:
 
-| Query                                   | Result screenshot                                                                                                                                        |
-| --------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Overall KPIs                            | [`SQL_Analysis_KPI.png`](SQL/SQL_Analysis_Queries_Photos/SQL_Analysis_KPI.png)                                                                           |
-| Monthly sales & profit                  | [`SQL_Analysismonthly_sales_profit.png`](SQL/SQL_Analysis_Queries_Photos/SQL_Analysismonthly_sales_profit.png)                                           |
-| Sales/profit by category & sub-category | [`SQL_Analysis_Sales-Profit_by_Category_and_SubCategory.png`](SQL/SQL_Analysis_Queries_Photos/SQL_Analysis_Sales-Profit_by_Category_and_SubCategory.png) |
-| Sales/profit/orders by region & state   | [`SQL_Analysis_Sales-Profit_Orders_by_Region_and_State.png`](SQL/SQL_Analysis_Queries_Photos/SQL_Analysis_Sales-Profit_Orders_by_Region_and_State.png)   |
-| Top 10 products by sales                | [`SQL_Analysis_Top_10_Products.png`](SQL/SQL_Analysis_Queries_Photos/SQL_Analysis_Top_10_Products.png)                                                   |
-| Year-over-year comparison by month      | [`SQL_Analysis_YoY_Comparison_by_Month.png`](SQL/SQL_Analysis_Queries_Photos/SQL_Analysis_YoY_Comparison_by_Month.png)                                   |
+| Query                                   | Result screenshot                                                                                                                                                             |
+| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Overall KPIs                            | [SQL_Analysis_KPI.png](sql/Analysis%20Photos/SQL_Analysis_KPI.png)                                                                                             |
+| Monthly sales & profit                  | [SQL_Analysis_MonthlySales-Profit.png](sql/Analysis%20Photos/SQL_Analysis_MonthlySales-Profit.png)                                                             |
+| Sales/profit by category & sub-category | [SQL_Analysis_Sales-Profit by Category and SubCategory.png](<sql/Analysis%20Photos/SQL_Analysis_Sales-Profit%20by%20Category%20and%20SubCategory.png>)           |
+| Sales/profit/orders by region & state   | [SQL_Analysis_Sales-Profit-Orders by Region and State.png](<sql/Analysis%20Photos/SQL_Analysis_Sales-Profit-Orders%20by%20Region%20and%20State.png>)             |
+| Top 10 products by sales                | [SQL_Analysis_Top 10 Products.png](<sql/Analysis%20Photos/SQL_Analysis_Top%2010%20Products.png>)                                                                 |
+| Year-over-year comparison by month      | [SQL_Analysis_YoY comparion by Month.png](<sql/Analysis%20Photos/SQL_Analysis_YoY%20comparion%20by%20Month.png>)                                                 |
 
 **Headline numbers (verified in phpMyAdmin):**
 
@@ -83,22 +80,20 @@ Six core queries in **[`sql/04_sql_analysis_queries.sql`](sql/04_sql_analysis_qu
 
 ## 4. Power BI Dashboard
 
-Four pages, built on the cleaned data, with `Order Date`, `Category`, and `Segment` slicers synced across all pages so filtering on one page carries through the others.
+Four pages, built on the cleaned data, with `Order Date`, `Category`, and `Segment` slicers synced across all pages so filtering on one page carries through the others. Full working file: [`Sales Analysis.pbix`](powerbi/Visual%20Process/Sales%20Analysis.pbix).
 
 ### Core DAX Measures
 
-| Measure         | Formula                                                         | Screenshot                                                                                                              |
-| --------------- | --------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------------------- |
-| Total Sales     | `SUM(orders[sales])`                                            | [Total_Sales_DAX.png](powerbi/DAX_Measures/Total_Sales_DAX.png)                                                         |
-| Total Profit    | `SUM(orders[profit])`                                           | [Total_Profit_DAX.png](powerbi/DAX_Measures/Total_Profit_DAX.png)                                                       |
-| Profit Margin % | `DIVIDE([Total Profit],[Total Sales],0)`                        | [Profit_Margin_DAX.png](powerbi/DAX_Measures/Profit_Margin_DAX.png)                                                     |
-| Total Orders    | `DISTINCTCOUNT(orders[order_id])`                               | [Total_Orders_DAX.png](powerbi/DAX_Measures/Total_Orders_DAX.png)                                                       |
-| Avg Order Value | `DIVIDE([Total Sales],[Total Orders],0)`                        | [Average_Order_Value_DAX.png](powerbi/DAX_Measures/Average_Order_Value_DAX.png)                                         |
-| Discount Band   | `SWITCH(TRUE(), .)` grouping discount into bands                | [18_Page4_Discount_Band_DAX.png](powerbi/Visual_Process/18_Page4_Discount_Band_DAX.png)                                 |
-| Customer Status | `VAR FirstOrderDate = CALCULATE(MIN(order_date), ALLEXCEPT(…))` | [15_DAX_Measure_for_New-Returning_Customers.png](powerbi/Visual_Process/15_DAX_Measure_for_New-Returning_Customers.png) |
-| Avg Ship Days   | `AVERAGEX(orders, DATEDIFF(order_date, ship_date, DAY))`        | [20_Avg_Ship_Days_DAX.png](powerbi/Visual_Process/20_Avg_Ship_Days_DAX.png)                                             |
-
-→ flags each order as the customer's first order or a repeat
+| Measure         | Formula                                                         | Screenshot                                                                                                     |
+| --------------- | --------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| Total Sales     | `SUM(orders[sales])`                                            | [Total Sales DAX.png](powerbi/DAX%20Measures/Total%20Sales%20DAX.png)                                             |
+| Total Profit    | `SUM(orders[profit])`                                           | [Total Profit DAX.png](powerbi/DAX%20Measures/Total%20Profit%20DAX.png)                                           |
+| Profit Margin % | `DIVIDE([Total Profit],[Total Sales],0)`                        | [Profit Margin DAX .png](powerbi/DAX%20Measures/Profit%20Margin%20DAX%20.png)                                     |
+| Total Orders    | `DISTINCTCOUNT(orders[order_id])`                               | [Total Orders DAX.png](powerbi/DAX%20Measures/Total%20Orders%20DAX.png)                                           |
+| Avg Order Value | `DIVIDE([Total Sales],[Total Orders],0)`                        | [Average Order Value DAX.png](powerbi/DAX%20Measures/Average%20Order%20Value%20DAX.png)                           |
+| Discount Band   | `SWITCH(TRUE(), …)` grouping discount into bands                | [18_Page4_Discount Band DAX .png](powerbi/Visual%20Process/18_Page4_Discount%20Band%20DAX%20.png)                 |
+| Customer Status | `VAR FirstOrderDate = CALCULATE(MIN(order_date), ALLEXCEPT(…))` → flags each order as the customer's first order or a repeat | [15_DAX Measure for New-Returning Customer.png](powerbi/Visual%20Process/15_DAX%20Measure%20for%20New-Returning%20Customer.png) |
+| Avg Ship Days   | `AVERAGEX(orders, DATEDIFF(order_date, ship_date, DAY))`        | [20_Avg Ship Days DAX.png](powerbi/Visual%20Process/20_Avg%20Ship%20Days%20DAX.png)                               |
 
 ---
 
@@ -108,12 +103,12 @@ KPI cards, monthly sales & profit trend, sales/profit by region.
 
 **Build process:**
 
-1. Title added - [`1_title.png`](powerbi/Visual_Process/1_title.png)
-2. KPI cards added one at a time - [`2_adding_kpi.png`](powerbi/Visual_Process/2_adding_kpi.png)
-3. Adding Slicers to make dashboard more interactive - [`3_adding_slicers(timeline,categories,segments).png`](powerbi/Visual_Process/3_adding_slicers%28timeline,categories,segments%29.png)
-4. Line Chart showcasing total profit and sales by year and month - [`4_Line_Chart.png`](powerbi/Visual_Process/4_Line_Chart.png)
-5. Regional Cluster Bar across four regions - [`5_clustered_bar_chart.png`](powerbi/Visual_Process/5_clustered_bar_chart.png)
-6. Page 1 Final edits, card borders added, correct overall formatting, line smoothing turned off for line chart  [`6_Final_Edits_for_Page_1`](powerbi/Visual_Process/6_Final_Edits_for_Page_1)
+1. Title added - [1_Title.png](powerbi/Visual%20Process/1_Title.png)
+2. KPI cards added one at a time - [2_Adding KPI's.png](powerbi/Visual%20Process/2_Adding%20KPI's.png)
+3. Slicers added to make the dashboard interactive (timeline, categories, segments) - [3_Adding Slicers (timeline, categories, segments).png](<powerbi/Visual%20Process/3_Adding%20Slicers%20(timeline,%20categories,%20segments).png>)
+4. Line chart showcasing total profit and sales by year and month - [4_Line Chart.png](powerbi/Visual%20Process/4_Line%20Chart.png)
+5. Regional clustered bar chart across four regions - [5_Clustered Bar Chart.png](powerbi/Visual%20Process/5_Clustered%20Bar%20Chart.png)
+6. Page 1 final edits - card borders added, correct overall formatting, line smoothing turned off for the line chart - [6_Final Edits for Page 1.png](powerbi/Visual%20Process/6_Final%20Edits%20for%20Page%201.png)
 
 **Key findings:**
 
@@ -129,11 +124,11 @@ Sales by sub-category, top 10 products by sales, bottom 10 products by profit ma
 
 **Build process:**
 
-1. Adding Clustered Bar Chart that showcases total sales and profit by sub-category and category [`7_Page2_ClusteredBarChart.png`](powerbi/Visual_Process/7_Page2_ClusteredBarChart.png)
-2. X-axis value fix so that it better represents the range of values [`8_Page2_ClusteredBarChart_edit_for_x-axis.png`](powerbi/Visual_Process/8_Page2_ClusteredBarChart_edit_for_x-axis.png)
-3. Top 10 products by sales, showing the filter - [`9_Page2_Top10_by_Sales_Bar_Chart.png`](powerbi/Visual_Process/9_Page2_Top10_by_Sales_Bar_Chart.png)
-4. Bottom 10 by profit margin, built using a Top N filter of Bottom 10 by `Profit Margin %` - [`10_Page2_Bottom10_by_Profit_Margin_Bar_Chart.png`](powerbi/Visual_Process/10_Page2_Bottom10_by_Profit_Margin_Bar_Chart.png)
-5. Final Page 2 Edits, added slicers similar to page1,borders, data labels and category-based color coding across all charts - [`08_final.png`](powerbi/Visual_Process/08_final.png)
+1. Clustered bar chart added showcasing total sales and profit by sub-category and category - [7_Page2_ClusteredBarChart.png](powerbi/Visual%20Process/7_Page2_ClusteredBarChart.png)
+2. X-axis value fix so it better represents the range of values - [8_Page2_ClusteredBarChart edit for X-axis.png](powerbi/Visual%20Process/8_Page2_ClusteredBarChart%20edit%20for%20X-axis.png)
+3. Top 10 products by sales, showing the filter - [9_Page2_Top 10 by Sales Bar Chart.png](powerbi/Visual%20Process/9_Page2_Top%2010%20by%20Sales%20Bar%20Chart.png)
+4. Bottom 10 by profit margin, built using a Top N filter set to Bottom 10 by `Profit Margin %` - [10_Page2_Top10 by Profit Margin Bar Chart.png](<powerbi/Visual%20Process/10_Page2_Top10%20by%20Profit%20Margin%20Bar%20Chart.png>)
+5. Final Page 2 edits - slicers added (matching Page 1), borders, data labels, and category-based color coding applied across all charts - [11_Page2_Final Edits.png](powerbi/Visual%20Process/11_Page2_Final%20Edits.png)
 
 **Key findings:**
 
@@ -149,17 +144,17 @@ Sales by segment, top 10 customers by lifetime sales, new vs. returning customer
 
 **Build process:**
 
-1. Donut chart built - [`12_Page3_Donut_Chart.png`](powerbi/Visual_Process/12_Page3_Donut_Chart.png)
-2. Added different colors to help differentiate from Page 2's category colors - [`13_Page3_Donut_Color_Change.png`](powerbi/Visual_Process/13_Page3_Donut_Color_Change.png)
-3. Top 10 customers by Lifetime sales chart built, - [`14_Top10_Customers_by_Lifetime_Sales_Chart.png`](powerbi/Visual_Process/14_Top10_Customers_by_Lifetime_Sales_Chart.png)
-4. Added new  measure to help customer status(new vs returning) data label - [`15_DAX_Measure_for_New_Returning_Customers.png`](powerbi/Visual_Process/15_DAX_Measure_for_New_Returning_Customers.png)
-5. New vs. Returning stacked column chart built, using the `Customer Status` measure (redefined mid-build from "ordered in signup month" to "customer's first order ever," since the original definition produced a near-zero "New" share) - [`16_New_vs_Returning_StackedBarChart.png`](powerbi/Visual_Process/16_New_vs_Returning_StackedBarChart.png)
-6. Adding onto step 5, I had to make sure the chart was displaying the information in the correct order. Do to this, I had to simply change the axis setting to sort by ascending
-7. Final Page 3 Edits, added corresponding slicers to the information needed, borders and data labels here possible — [`10_final.png`](powerbi/Visual_Process/10_final.png)
+1. Donut chart built - [12_Page3_DonutChart.png](powerbi/Visual%20Process/12_Page3_DonutChart.png)
+2. Colors changed to differentiate from Page 2's category colors - [13_Page3_DonutColorChange.png](powerbi/Visual%20Process/13_Page3_DonutColorChange.png)
+3. Top 10 customers by lifetime sales chart built - [14_Top10 Customers by Lifetime sales chart.png](<powerbi/Visual%20Process/14_Top10%20Customers%20by%20Lifetime%20sales%20chart.png>)
+4. New measure added to support the customer status (new vs. returning) label - [15_DAX Measure for New-Returning Customer.png](powerbi/Visual%20Process/15_DAX%20Measure%20for%20New-Returning%20Customer.png)
+5. New vs. Returning stacked column chart built, using the `Customer Status` measure (redefined mid-build from "ordered in signup month" to "customer's first order ever," since the original definition produced a near-zero "New" share) - [16_NewVSReturning StackedBarChart.png](<powerbi/Visual%20Process/16_NewVSReturning%20StackedBarChart.png>)
+6. Chart's sort order fixed so months display chronologically, by changing the axis sort setting to ascending (no separate screenshot for this step)
+7. Final Page 3 edits - corresponding slicers, borders, and data labels added where possible - [17_Page3_FinalEdits.png](powerbi/Visual%20Process/17_Page3_FinalEdits.png)
 
 **Key findings:**
 
-* The consumer segment drives 57.8% of total sales ($1.87M) - more than Corporate (25.8%) and Home Office (16.4%) combined
+* The Consumer segment drives 57.8% of total sales ($1.87M) - more than Corporate (25.8%) and Home Office (16.4%) combined
 * Despite that, the top 10 individual customers by lifetime spend are fairly evenly split across all three segments
 * Early 2023 revenue was effectively 100% from new customers; by 2024-2025, returning customers account for the large majority of monthly revenue. This shows a healthy retention signal
 
@@ -171,14 +166,14 @@ Profit margin by discount band, average shipping time by ship mode, sales & marg
 
 **Build process:**
 
-1. Need to add a new measure to help create the Discount Band Chart [`18_Page4_Discount_Band_DAX.png`](powerbi/Visual_Process/18_Page4_Discount_Band_DAX.png)
-2. Discount Band chart built - [`19_discount_band_column_chart.png`](powerbi/Visual_Process/19_discount_band_column_chart.png)
-3. New measure to calculate average shipping days [`20_Average_Ship_Days_DAX.png`](powerbi/Visual_Process/20_Average_Ship_Days_DAX.png)
-4. Average Shipping Time chart built - [`21_average_shipping_time_bar_chart.png`](powerbi/Visual_Process/21_average_shipping_time_bar_chart.png)
-5. Combo chart (Total Sales + Profit Margin % by ship mode) built - [`22_Total_Sales_Profit_Margin_Line_and_Stacked_Column.png`](powerbi/Visual_Process/22_Total_Sales_Profit_Margin_Line_and_Stacked_Column.png)
-6. Bar color changed to match Total Sales' color in the dashboard
-7. Rearranged so the combo chart spans full width for better readability - seen in the final png below
-8. Final Page 4 Edits,added slicers, borders and data labels - [`23_Page4_FinalEdits.png`](powerbi/Visual_Process/23_Page4_FinalEdits.png)
+1. New measure added to support the Discount Band chart - [18_Page4_Discount Band DAX .png](powerbi/Visual%20Process/18_Page4_Discount%20Band%20DAX%20.png)
+2. Discount Band chart built - [19_DiscountBand Column Chart.png](powerbi/Visual%20Process/19_DiscountBand%20Column%20Chart.png)
+3. New measure added to calculate average shipping days - [20_Avg Ship Days DAX.png](powerbi/Visual%20Process/20_Avg%20Ship%20Days%20DAX.png)
+4. Average Shipping Time chart built - [21_Average ShippingTime Bar Chart.png](<powerbi/Visual%20Process/21_Average%20ShippingTime%20Bar%20Chart.png>)
+5. Combo chart (Total Sales + Profit Margin % by ship mode) built - [22_Total Sales_ProfitMargin Line and Stacked Column Chart.png](<powerbi/Visual%20Process/22_Total%20Sales_ProfitMargin%20Line%20and%20Stacked%20Column%20Chart.png>)
+6. Bar color changed to match Total Sales' color used elsewhere in the dashboard (no separate screenshot for this step)
+7. Rearranged so the combo chart spans full width for better readability (seen in the final image below)
+8. Final Page 4 edits - slicers, borders, and data labels added - [23_Page4_FinalEdits.png](powerbi/Visual%20Process/23_Page4_FinalEdits.png)
 
 **Key findings:**
 
