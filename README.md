@@ -1,4 +1,4 @@
-[README.md](https://github.com/user-attachments/files/32030898/README.md)
+[README.md](https://github.com/user-attachments/files/32069249/README.md)
 # Sales Performance Analysis
 
 An end-to-end sales analytics project: raw data → SQL cleaning → SQL analysis → interactive Power BI dashboard.
@@ -80,7 +80,7 @@ Six core queries in **[`sql/04_sql_analysis_queries.sql`](sql/04_sql_analysis_qu
 
 ## 4. Power BI Dashboard
 
-Four pages, built on the cleaned data, with `Order Date`, `Category`, and `Segment` slicers synced across all pages so filtering on one page carries through the others. Full working file: [`Sales Analysis.pbix`](powerbi/Visual%20Process/Sales%20Analysis.pbix).
+Four pages, built on the cleaned data, with `Order Date`, `Category`, and `Segment` slicers synced across all pages so filtering on one page carries through the others. Full working file: [`Sales Analysis.pbix`](<powerbi/Sales%20Analysis.pbix>).
 
 ### Core DAX Measures
 
@@ -93,7 +93,7 @@ Four pages, built on the cleaned data, with `Order Date`, `Category`, and `Segme
 | Avg Order Value | `DIVIDE([Total Sales],[Total Orders],0)`                        | [Average Order Value DAX.png](powerbi/DAX%20Measures/Average%20Order%20Value%20DAX.png)                           |
 | Discount Band   | `SWITCH(TRUE(), …)` grouping discount into bands                | [18_Page4_Discount Band DAX .png](powerbi/Visual%20Process/18_Page4_Discount%20Band%20DAX%20.png)                 |
 | Customer Status | `VAR FirstOrderDate = CALCULATE(MIN(order_date), ALLEXCEPT(…))` → flags each order as the customer's first order or a repeat | [15_DAX Measure for New-Returning Customer.png](powerbi/Visual%20Process/15_DAX%20Measure%20for%20New-Returning%20Customer.png) |
-| Avg Ship Days   | `AVERAGEX(orders, DATEDIFF(order_date, ship_date, DAY))`        | [20_Avg Ship Days DAX.png](powerbi/Visual%20Process/20_Avg%20Ship%20Days%20DAX.png)                               |
+| Avg Ship Days   | `AVERAGEX(orders, DATEDIFF(order_date, ship_date, DAY))`        | [20_Average Ship Days DAX.png](<powerbi/Visual%20Process/20_Average%20Ship%20Days%20DAX.png>)                               |
 
 ---
 
@@ -127,7 +127,7 @@ Sales by sub-category, top 10 products by sales, bottom 10 products by profit ma
 1. Clustered bar chart added showcasing total sales and profit by sub-category and category - [7_Page2_ClusteredBarChart.png](powerbi/Visual%20Process/7_Page2_ClusteredBarChart.png)
 2. X-axis value fix so it better represents the range of values - [8_Page2_ClusteredBarChart edit for X-axis.png](powerbi/Visual%20Process/8_Page2_ClusteredBarChart%20edit%20for%20X-axis.png)
 3. Top 10 products by sales, showing the filter - [9_Page2_Top 10 by Sales Bar Chart.png](powerbi/Visual%20Process/9_Page2_Top%2010%20by%20Sales%20Bar%20Chart.png)
-4. Bottom 10 by profit margin, built using a Top N filter set to Bottom 10 by `Profit Margin %` - [10_Page2_Top10 by Profit Margin Bar Chart.png](<powerbi/Visual%20Process/10_Page2_Top10%20by%20Profit%20Margin%20Bar%20Chart.png>)
+4. Bottom 10 by profit margin, built using a Top N filter set to Bottom 10 by `Profit Margin %` - [10_Page2_Bottom10 by Profit Margin Bar Chart.png](<powerbi/Visual%20Process/10_Page2_Bottom10%20by%20Profit%20Margin%20Bar%20Chart.png>)
 5. Final Page 2 edits - slicers added (matching Page 1), borders, data labels, and category-based color coding applied across all charts - [11_Page2_Final Edits.png](powerbi/Visual%20Process/11_Page2_Final%20Edits.png)
 
 **Key findings:**
@@ -168,7 +168,7 @@ Profit margin by discount band, average shipping time by ship mode, sales & marg
 
 1. New measure added to support the Discount Band chart - [18_Page4_Discount Band DAX .png](powerbi/Visual%20Process/18_Page4_Discount%20Band%20DAX%20.png)
 2. Discount Band chart built - [19_DiscountBand Column Chart.png](powerbi/Visual%20Process/19_DiscountBand%20Column%20Chart.png)
-3. New measure added to calculate average shipping days - [20_Avg Ship Days DAX.png](powerbi/Visual%20Process/20_Avg%20Ship%20Days%20DAX.png)
+3. New measure added to calculate average shipping days - [20_Average Ship Days DAX.png](<powerbi/Visual%20Process/20_Average%20Ship%20Days%20DAX.png>)
 4. Average Shipping Time chart built - [21_Average ShippingTime Bar Chart.png](<powerbi/Visual%20Process/21_Average%20ShippingTime%20Bar%20Chart.png>)
 5. Combo chart (Total Sales + Profit Margin % by ship mode) built - [22_Total Sales_ProfitMargin Line and Stacked Column Chart.png](<powerbi/Visual%20Process/22_Total%20Sales_ProfitMargin%20Line%20and%20Stacked%20Column%20Chart.png>)
 6. Bar color changed to match Total Sales' color used elsewhere in the dashboard (no separate screenshot for this step)
